@@ -30,13 +30,18 @@ public class User {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "password", length = 16)
+    @Size(min = 10, max = 20)
+    private String password;
+
     public User() {
     }
 
-    public User(Long id, String name, String email) {
+    public User(Long id, String name, String email, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.password = password;
     }
 
     public Long getId() {
@@ -59,8 +64,12 @@ public class User {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void getPassword(String password) {
+        this.password = password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
@@ -74,5 +83,15 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
