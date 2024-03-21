@@ -6,4 +6,6 @@ import org.ads.entities.User;
 
 @ApplicationScoped
 public class UserRepository implements PanacheRepository<User> {
+
+
 }

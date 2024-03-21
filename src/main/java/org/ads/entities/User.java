@@ -1,6 +1,6 @@
 package org.ads.entities;
 
-import jakarta.enterprise.context.ApplicationScoped;
+import io.quarkus.security.jpa.UserDefinition;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,12 +9,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
+import org.ads.entities.enums.Role;
 
 import java.util.Objects;
 
 @Entity
 @Table(name = "tbl_user")
-@ApplicationScoped
+//@ApplicationScoped
+@UserDefinition
 public class User {
 
     @Id
@@ -30,17 +32,22 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "password", length = 16)
-    @Size(min = 10, max = 20)
+
+    private String userName;
+
+    private Role userType;
+
     private String password;
 
     public User() {
     }
 
-    public User(Long id, String name, String email, String password) {
+    public User(Long id, String name, String email, String userName, Role userType, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.userName = userName;
+        this.userType = userType;
         this.password = password;
     }
 
@@ -64,8 +71,29 @@ public class User {
         return email;
     }
 
-    public void getPassword(String password) {
-        this.password = password;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Role getUserType() {
+        return userType;
+    }
+
+
+    public void setUserType(Role userType) {
+        this.userType = userType;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setPassword(String password) {
@@ -91,6 +119,8 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userType=" + userType +
                 ", password='" + password + '\'' +
                 '}';
     }
