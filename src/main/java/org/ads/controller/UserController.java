@@ -20,15 +20,6 @@ public class UserController {
     @Inject
     UserService userService;
 
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    @Transactional
-    public Response newUser(User user) {
-        User userAux = userService.createNewUser(user);
-        return Response.status(Response.Status.CREATED).entity(user).build();
-    }
-
     @GET
     @Path("listUsers")
     @Produces(MediaType.APPLICATION_JSON)
@@ -37,4 +28,15 @@ public class UserController {
         List<User> users = userService.listaAllUsers();
         return Response.ok(users).build();
     }
+
+    @POST
+    @Path("createUser")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    public Response createUser(User user) {
+        User createdUser = userService.createNewUser(user.getName(), user.getEmail(), user.getUserName(), user.getPassword(), user.getUserType());
+        return Response.ok(createdUser).build();
+    }
 }
+

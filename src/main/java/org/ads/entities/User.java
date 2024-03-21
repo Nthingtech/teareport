@@ -1,6 +1,11 @@
 package org.ads.entities;
 
+import io.quarkus.elytron.security.common.BcryptUtil;
+import io.quarkus.security.jpa.Password;
+import io.quarkus.security.jpa.Roles;
 import io.quarkus.security.jpa.UserDefinition;
+import io.quarkus.security.jpa.Username;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,13 +14,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
-import org.ads.entities.enums.Role;
 
 import java.util.Objects;
 
 @Entity
 @Table(name = "tbl_user")
-//@ApplicationScoped
+@ApplicationScoped
 @UserDefinition
 public class User {
 
@@ -28,27 +32,29 @@ public class User {
     @Size(max = 40, message = "O nome não pode exceder 40 caracteres")
     private String name;
 
-    @Email(message = "Email não é válido", regexp = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/")
+    @Email
     @Column(name = "email")
     private String email;
 
-
+    @Username
     private String userName;
 
-    private Role userType;
+    @Roles
+    private String userType;
 
+    @Password
     private String password;
 
     public User() {
     }
 
-    public User(Long id, String name, String email, String userName, Role userType, String password) {
+    public User(Long id, String name, String email, String userName, String userType, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.userName = userName;
         this.userType = userType;
-        this.password = password;
+        this.password = BcryptUtil.bcryptHash(password);
     }
 
     public Long getId() {
@@ -83,12 +89,11 @@ public class User {
         this.userName = userName;
     }
 
-    public Role getUserType() {
+    public String getUserType() {
         return userType;
     }
 
-
-    public void setUserType(Role userType) {
+    public void setUserType(String userType) {
         this.userType = userType;
     }
 
