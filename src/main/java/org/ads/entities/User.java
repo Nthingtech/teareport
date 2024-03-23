@@ -50,7 +50,7 @@ public class User {
     @Password
     private String password;
 
-    @OneToMany(mappedBy = "childReport", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonbTransient
     private List<ChildReport> childReports;
 

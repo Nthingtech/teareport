@@ -25,6 +25,10 @@ public class UserService {
         return user;
     }
 
+    public void updateUser(User user) {
+        userRepository.updateUser(user);
+    }
+
     public List<User> listaAllUsers() {
         return userRepository.listAll();
     }
@@ -37,5 +41,8 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public List<User> searchByName(String keyuser) {
+        return userRepository.findByNameUser(keyuser);
+    }
 
 }
