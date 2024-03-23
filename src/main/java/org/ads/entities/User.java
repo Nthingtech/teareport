@@ -6,15 +6,20 @@ import io.quarkus.security.jpa.Roles;
 import io.quarkus.security.jpa.UserDefinition;
 import io.quarkus.security.jpa.Username;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.json.bind.annotation.JsonbTransient;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -40,20 +45,23 @@ public class User {
     private String userName;
 
     @Roles
-    private String userType;
+    private String role;
 
     @Password
     private String password;
 
+    @OneToMany(mappedBy = "childReport", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonbTransient
+    private List<ChildReport> childReports;
+
     public User() {
     }
 
-    public User(Long id, String name, String email, String userName, String userType, String password) {
+    public User(Long id, String name, String email, String userName, String role, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.userName = userName;
-        this.userType = userType;
         this.password = BcryptUtil.bcryptHash(password);
     }
 
@@ -89,12 +97,12 @@ public class User {
         this.userName = userName;
     }
 
-    public String getUserType() {
-        return userType;
+    public String getRole() {
+        return role;
     }
 
-    public void setUserType(String userType) {
-        this.userType = userType;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getPassword() {
@@ -103,6 +111,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<ChildReport> getChildReports() {
+        return childReports;
+    }
+
+    public void setChildReports(List<ChildReport> childReports) {
+        this.childReports = childReports;
     }
 
     @Override
@@ -125,7 +141,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", userName='" + userName + '\'' +
-                ", userType=" + userType +
+                ", role='" + role + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

@@ -14,19 +14,27 @@ public class UserService {
     @Inject
     private UserRepository userRepository;
 
-    public User createNewUser(String name, String email, String userName, String password, String userType) {
+    public User createNewUser(String name, String email, String userName, String password, String role) {
         User user = new User();
         user.setName(name);
         user.setEmail(email);
         user.setUserName(userName);
         user.setPassword(BcryptUtil.bcryptHash(password));
-        user.setUserType(userType);
+        user.setRole(role);
         userRepository.persist(user);
         return user;
     }
 
     public List<User> listaAllUsers() {
         return userRepository.listAll();
+    }
+
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    public User findById(Long id) {
+        return userRepository.findById(id);
     }
 
 

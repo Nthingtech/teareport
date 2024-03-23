@@ -1,5 +1,6 @@
 package org.ads.controller;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
@@ -22,6 +23,7 @@ public class UserController {
 
     @GET
     @Path("listUsers")
+    @RolesAllowed("admin")
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public Response listUser() {
@@ -35,7 +37,7 @@ public class UserController {
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public Response createUser(User user) {
-        User createdUser = userService.createNewUser(user.getName(), user.getEmail(), user.getUserName(), user.getPassword(), user.getUserType());
+        User createdUser = userService.createNewUser(user.getName(), user.getEmail(), user.getUserName(), user.getPassword(), user.getRole());
         return Response.ok(createdUser).build();
     }
 }

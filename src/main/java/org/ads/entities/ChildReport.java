@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import org.ads.entities.enums.Aggressiveness;
 import org.ads.entities.enums.Anxiety;
@@ -14,10 +16,12 @@ import org.ads.entities.enums.Communication;
 import org.ads.entities.enums.Concentration;
 import org.ads.entities.enums.DayRating;
 import org.ads.entities.enums.Friendliness;
+import org.ads.entities.enums.Gender;
 import org.ads.entities.enums.Impatience;
 import org.ads.entities.enums.Pleasant;
 import org.ads.entities.enums.SocialInteraction;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 
@@ -31,11 +35,21 @@ public class ChildReport {
     @Column(name = "id_childreport")
     private Long idChildReport;
 
+    @Column(name = "date", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private LocalDate date;
+
     @Column(name = "namechild")
     private String nameChild;
 
+    @Column(name = "dtbirth", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private LocalDate dtBirth;
+
+    @Column(name = "gender")
+    private Gender gender;
+
     @Column(name = "aggressiveness")
     private Aggressiveness aggressiveness;
+
 
     @Column(name = "anxiety")
     private Anxiety anxiety;
@@ -64,14 +78,21 @@ public class ChildReport {
     @Column(name = "socialinteraction")
     private SocialInteraction socialInteraction;
 
+    @ManyToOne
+    @JoinColumn(name = "tbl_user_id_user")
+    private User user;
+
 
     public ChildReport() {
     }
 
-    public ChildReport(Long idChildReport, String nameChild, Aggressiveness aggressiveness, Anxiety anxiety, ChildFeel childFeel, Communication communication, Concentration concentration,
-                       DayRating dayRating, Friendliness friendliness, Impatience impatience, Pleasant pleasant, SocialInteraction socialInteraction) {
+    public ChildReport(Long idChildReport, LocalDate date, String nameChild, LocalDate dtBirth, Gender gender, Aggressiveness aggressiveness, Anxiety anxiety, ChildFeel childFeel, Communication communication,
+                       Concentration concentration, DayRating dayRating, Friendliness friendliness, Impatience impatience, Pleasant pleasant, SocialInteraction socialInteraction, User user) {
         this.idChildReport = idChildReport;
+        this.date = date;
         this.nameChild = nameChild;
+        this.dtBirth = dtBirth;
+        this.gender = gender;
         this.aggressiveness = aggressiveness;
         this.anxiety = anxiety;
         this.childFeel = childFeel;
@@ -82,18 +103,43 @@ public class ChildReport {
         this.impatience = impatience;
         this.pleasant = pleasant;
         this.socialInteraction = socialInteraction;
+        this.user = user;
     }
 
-    public Long getId() {
+    public Long getIdChildReport() {
         return idChildReport;
     }
 
-    public void setId(Long idChildReport) {
+    public void setIdChildReport(Long idChildReport) {
         this.idChildReport = idChildReport;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public String getNameChild() {
         return nameChild;
+    }
+
+    public LocalDate getDtBirth() {
+        return dtBirth;
+    }
+
+    public void setDtBirth(LocalDate dtBirth) {
+        this.dtBirth = dtBirth;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     public void setNameChild(String nameChild) {
@@ -180,6 +226,14 @@ public class ChildReport {
         this.socialInteraction = socialInteraction;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -197,7 +251,10 @@ public class ChildReport {
     public String toString() {
         return "ChildReport{" +
                 "idChildReport=" + idChildReport +
+                ", date=" + date +
                 ", nameChild='" + nameChild + '\'' +
+                ", dtBirth=" + dtBirth +
+                ", gender=" + gender +
                 ", aggressiveness=" + aggressiveness +
                 ", anxiety=" + anxiety +
                 ", childFeel=" + childFeel +
@@ -208,6 +265,7 @@ public class ChildReport {
                 ", impatience=" + impatience +
                 ", pleasant=" + pleasant +
                 ", socialInteraction=" + socialInteraction +
+                ", user=" + user +
                 '}';
     }
 }
