@@ -32,16 +32,16 @@ public class ChildReport {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id_childreport")
+    @Column(name = "idChildReport")
     private Long idChildReport;
 
     @Column(name = "date", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private LocalDate date;
 
-    @Column(name = "namechild")
+    @Column(name = "nameChild")
     private String nameChild;
 
-    @Column(name = "dtbirth", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    @Column(name = "dtBirth", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private LocalDate dtBirth;
 
     @Column(name = "gender")
@@ -54,7 +54,7 @@ public class ChildReport {
     @Column(name = "anxiety")
     private Anxiety anxiety;
 
-    @Column(name = "childfeel")
+    @Column(name = "childFeel")
     private ChildFeel childFeel;
 
     @Column(name = "communication")
@@ -63,7 +63,7 @@ public class ChildReport {
     @Column(name = "concentration")
     private Concentration concentration;
 
-    @Column(name = "dayrating")
+    @Column(name = "dayRating")
     private DayRating dayRating;
 
     @Column(name = "friendliness")
@@ -75,7 +75,7 @@ public class ChildReport {
     @Column(name = "pleasant")
     private Pleasant pleasant;
 
-    @Column(name = "socialinteraction")
+    @Column(name = "socialInteraction")
     private SocialInteraction socialInteraction;
 
     @ManyToOne

@@ -18,11 +18,24 @@ public class ChildReportService {
         return childReport;
     }
 
+    public void updateChildReport(ChildReport childReport){
+        childReportRepository.updateChildReport(childReport);
+    }
+
     public List<ChildReport> listAllChildReport() {
         return childReportRepository.listAll();
+    }
+
+    public void deleteChildReport(Long idChildReport) {
+        childReportRepository.deleteById(idChildReport);
     }
 
     public ChildReport findById(Long id) {
         return childReportRepository.findById(id);
     }
+
+    public List<ChildReport> searchByName(String keyChildReport) {
+        return childReportRepository.findByNameChild(keyChildReport);
+    }
+
 }

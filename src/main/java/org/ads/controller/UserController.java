@@ -37,11 +37,11 @@ public class UserController {
     }
 
     @GET
-    @Path("user/{nameuser}")
+    @Path("user/{nameUser}")
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public Response findNameUser(@PathParam("nameuser") String nameuser) {
-        List<User> users = userService.searchByName(nameuser);
+    public Response findNameUser(@PathParam("nameUser") String nameUser) {
+        List<User> users = userService.searchByName(nameUser);
         if (!users.isEmpty()){
             return Response.status(Response.Status.OK).entity(users).build();
         }
@@ -87,6 +87,7 @@ public class UserController {
 
     @DELETE
     @Path("delete")
+    @Transactional
     public Response deleteUser(@QueryParam("id") Long id) {
         userService.deleteUser(id);
         return Response.status(Response.Status.OK).build();
