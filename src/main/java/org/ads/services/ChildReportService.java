@@ -21,4 +21,8 @@ public class ChildReportService {
     public List<ChildReport> listAllChildReport() {
         return childReportRepository.listAll();
     }
+
+    public ChildReport findById(Long id) {
+        return childReportRepository.findById(id);
+    }
 }

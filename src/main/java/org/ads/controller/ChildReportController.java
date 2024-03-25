@@ -7,6 +7,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.ads.entities.ChildReport;
@@ -20,13 +21,12 @@ public class ChildReportController {
     @Inject
     ChildReportService childReportService;
 
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    @Transactional
-    public Response newChildReport(ChildReport childReport) {
-        ChildReport childRepoAux = childReportService.createNewChildReport(childReport);
-        return Response.status(Response.Status.CREATED).entity(childReport).build();
+    public Response findById(@QueryParam("idChildReport") Long idChildReport){
+        ChildReport childReport = childReportService.findById(idChildReport);
+        if (childReport != null) {
+            return Response.status(Response.Status.OK).entity(childReport).build();
+        }
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
 
     @GET
@@ -37,4 +37,17 @@ public class ChildReportController {
         List<ChildReport> childReports = childReportService.listAllChildReport();
         return Response.ok(childReports).build();
     }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    public Response newChildReport(ChildReport childReport) {
+        ChildReport childRepo = childReportService.createNewChildReport(childReport);
+        if (childRepo != null) {
+            return Response.status(Response.Status.CREATED).entity(childReport).build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST).build();
+    }
+
 }
