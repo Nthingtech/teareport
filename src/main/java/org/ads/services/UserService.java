@@ -15,6 +15,7 @@ public class UserService {
     private UserRepository userRepository;
 
     public User createNewUser(String name, String email, String userName, String password, String role) {
+
         User user = new User();
         user.setName(name);
         user.setEmail(email);
@@ -24,6 +25,7 @@ public class UserService {
         userRepository.persist(user);
         return user;
     }
+
 
     public void updateUser(User user) {
         userRepository.updateUser(user);

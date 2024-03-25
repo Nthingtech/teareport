@@ -6,6 +6,7 @@ import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
@@ -62,8 +63,26 @@ public class UserController {
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public Response createUser(User user) {
-        User createdUser = userService.createNewUser(user.getName(), user.getEmail(), user.getUserName(), user.getPassword(), user.getRole());
-        return Response.ok(createdUser).build();
+        User createdUser = userService.createNewUser(user.getName(), user.getEmail(), user.getUserName(), user.getRole(), user.getPassword() );
+        if (createdUser != null){
+            return Response.status(Response.Status.CREATED).entity(user).build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST).build();
+    }
+
+    @PUT
+    @Path("updateUser")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    public Response updateUser(@QueryParam("id") Long id, User user) {
+        user.setId(id);
+        User foundUser = userService.findById(id);
+        if (foundUser == null){
+            return Response.status(Response.Status.NOT_FOUND).entity("Usuário não encontrado").build();
+        }
+        userService.updateUser(user);
+        return Response.status(Response.Status.OK).entity(user).build();
     }
 
     @DELETE
