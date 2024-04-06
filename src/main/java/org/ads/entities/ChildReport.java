@@ -82,12 +82,16 @@ public class ChildReport {
     @JoinColumn(name = "tbl_user_id_user")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "tbl_child_id_child")
+    private Child child;
+
 
     public ChildReport() {
     }
 
     public ChildReport(Long idChildReport, LocalDate date, String nameChild, LocalDate dtBirth, Gender gender, Aggressiveness aggressiveness, Anxiety anxiety, ChildFeel childFeel, Communication communication,
-                       Concentration concentration, DayRating dayRating, Friendliness friendliness, Impatience impatience, Pleasant pleasant, SocialInteraction socialInteraction, User user) {
+                       Concentration concentration, DayRating dayRating, Friendliness friendliness, Impatience impatience, Pleasant pleasant, SocialInteraction socialInteraction, User user, Child child) {
         this.idChildReport = idChildReport;
         this.date = date;
         this.nameChild = nameChild;
@@ -104,6 +108,7 @@ public class ChildReport {
         this.pleasant = pleasant;
         this.socialInteraction = socialInteraction;
         this.user = user;
+        this.child = child;
     }
 
     public Long getIdChildReport() {
@@ -232,6 +237,14 @@ public class ChildReport {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Child getChild() {
+        return child;
+    }
+
+    public void setChild(Child child) {
+        this.child = child;
     }
 
     @Override
