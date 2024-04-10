@@ -37,7 +37,8 @@ public class Child {
     public Child() {
     }
 
-    public Child(String name, LocalDate birthday, Gender gender) {
+    public Child(Long id, String name, LocalDate birthday, Gender gender) {
+        this.id = id;
         this.name = name;
         this.birthday = birthday;
         this.gender = gender;
