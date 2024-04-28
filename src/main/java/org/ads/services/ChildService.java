@@ -22,7 +22,7 @@ public class ChildService {
         childRepository.updateChild(child);
     }
 
-    public List<Child> listAllChilds() {
+    public List<Child> listAllChild() {
         return childRepository.listAll();
     }
 
