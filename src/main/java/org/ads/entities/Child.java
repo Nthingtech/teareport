@@ -1,6 +1,7 @@
 package org.ads.entities;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.json.bind.annotation.JsonbDateFormat;
 import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -25,6 +26,7 @@ public class Child {
     private String name;
 
     @Column(name = "birthday")
+    @JsonbDateFormat("dd/MM/yyyy")
     private LocalDate birthday;
 
     @Column(name = "gender")
