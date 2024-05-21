@@ -70,7 +70,6 @@ public class ChildReportController {
         }
         return Response.status(Response.Status.BAD_REQUEST).build();
     }
-
     @PUT
     @Path("updateChildReport")
     @Consumes(MediaType.APPLICATION_JSON)

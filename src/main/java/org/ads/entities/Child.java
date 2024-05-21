@@ -1,11 +1,12 @@
 package org.ads.entities;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.json.bind.annotation.JsonbDateFormat;
 import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,10 +35,10 @@ public class Child {
     private String name;
 
     @Column(name = "birthday")
-    @JsonbDateFormat("dd/MM/yyyy")
     private LocalDate birthday;
 
     @Column(name = "gender")
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 
     @OneToMany(mappedBy = "child", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -93,6 +94,7 @@ public class Child {
     public void setChildReports(List<ChildReport> childReports) {
         this.childReports = childReports;
     }
+
 
     @Override
     public boolean equals(Object o) {

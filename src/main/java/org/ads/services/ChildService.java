@@ -13,10 +13,11 @@ public class ChildService {
     @Inject
     private ChildRepository childRepository;
 
-    public Child newChild(Child child){
+   public Child newChild(Child child){
         childRepository.persist(child);
         return child;
     }
+
 
     public void updateChild (Child child) {
         childRepository.updateChild(child);
